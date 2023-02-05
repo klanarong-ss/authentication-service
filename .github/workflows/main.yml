@@ -30,5 +30,4 @@ jobs:
           key: ${{secrets.SSH_KEY}}
           port: 22
           script: |
-            docker pull klanarong/authentication-service:latest
-            docker run -p 91:80 -d --name authen-service klanarong/authentication-service:latest
+            docker-compose up

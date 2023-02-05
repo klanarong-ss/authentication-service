@@ -1,0 +1,9 @@
+version: '3.3'
+services:
+  authen-service: 
+    hostname: authen-service
+    container_name: authen-service
+    image: klanarong/authentication-service:latest
+    ports:
+      - 91:80/tcp
+    restart: always
