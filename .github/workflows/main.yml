@@ -30,4 +30,3 @@ jobs:
           key: ${{secrets.SSH_KEY}}
           port: 22
           script: |
-            docker-compose up
