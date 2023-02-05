@@ -33,5 +33,12 @@ namespace AuthenticationService.Controllers
             return Ok("monitor-3");
         }
 
+        [HttpGet]
+        [Route("monitor4")]
+        public IActionResult monitor4()
+        {
+            return Ok("monitor-4");
+        }
+
     }
 }

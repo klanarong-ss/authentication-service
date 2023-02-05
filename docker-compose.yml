@@ -5,5 +5,5 @@ services:
     container_name: authen-service
     image: klanarong/authentication-service:latest
     ports:
-      - 91:80/tcp
+      - 91:80
     restart: always
