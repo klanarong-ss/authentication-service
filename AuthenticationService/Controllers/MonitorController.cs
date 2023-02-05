@@ -37,7 +37,7 @@ namespace AuthenticationService.Controllers
         [Route("monitor4")]
         public IActionResult monitor4()
         {
-            return Ok("monitor-4");
+            return Ok("monitor-");
         }
 
     }
