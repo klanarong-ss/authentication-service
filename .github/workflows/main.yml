@@ -33,5 +33,5 @@ jobs:
             cd /home/work_space/authentication-service/
             git pull
             git checkout dev
-            docker-compose pull
-            docker-compose "docker-compose.yml" up -d --force-recreate
+            docker pull klanarong/authentication-service:latest
+            docker-compose up -d --force-recreate
