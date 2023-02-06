@@ -4,6 +4,8 @@ services:
     hostname: authen-service
     container_name: authen-service
     image: klanarong/authentication-service:latest
+    environment:
+      - TZ=Asia/Bankkok
     ports:
-      - 91:80
+      - '91:80'
     restart: always
