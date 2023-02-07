@@ -19,7 +19,7 @@ public partial class UserLogin
 
     public DateTime? LastLogin { get; set; }
 
-    public long? IsActive { get; set; }
+    public bool? IsActive { get; set; }
 
     public DateTime? CreatedDate { get; set; }
 

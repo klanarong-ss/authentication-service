@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace AuthenticationService.DataAccess.InterfaceRepositories
 {
-    internal interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
+        IUserLoginRepository UserLogin { get; }
+        void Save();
     }
 }

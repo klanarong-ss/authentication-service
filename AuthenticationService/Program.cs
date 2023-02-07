@@ -1,4 +1,8 @@
+using AuthenticationService.Bussiness.InterfaceServices;
+using AuthenticationService.Bussiness.Services;
+using AuthenticationService.DataAccess.InterfaceRepositories;
 using AuthenticationService.DataAccess.Models;
+using AuthenticationService.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +15,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("WebApi")));
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+// Register Dependency Injection
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IUserLoginService, UserLoginService>();
 
 var app = builder.Build();
 
