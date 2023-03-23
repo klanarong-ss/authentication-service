@@ -13,6 +13,7 @@ namespace AuthenticationService.Bussiness.common
         public static string UsernameDuplicate = "Username is already taken";
         public static string UserNotFound = "Username not found";
         public static string RegisterSuccess = "Register Success";
-        public static string RegisterFail = "Register Fail 11";
+        public static string RegisterFail = "Register Fail";
+        public static string InvalidUserName = "Invalid user name";
     }
 }

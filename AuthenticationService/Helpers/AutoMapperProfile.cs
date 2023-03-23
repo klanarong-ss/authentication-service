@@ -9,7 +9,7 @@ namespace AuthenticationService.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<UserLoginDto, UserLogin>();
+            CreateMap<RegisterRequest, UserLogin>();
         }
     }
 }
