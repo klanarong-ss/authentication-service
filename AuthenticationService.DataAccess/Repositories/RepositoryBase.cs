@@ -34,16 +34,8 @@ namespace AuthenticationService.DataAccess.Repositories
 
         public void Update(T entity)
         {
-            try
-            {
-                _dataContext.Set<T>().Update(entity);
-                _dataContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            _dataContext.Set<T>().Update(entity);
+            _dataContext.SaveChanges();
         }
         public IQueryable<T> FindAll()
         {
