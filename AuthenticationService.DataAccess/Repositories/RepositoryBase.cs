@@ -23,19 +23,27 @@ namespace AuthenticationService.DataAccess.Repositories
         public void Create(T entity)
         {
             _dataContext.Set<T>().AddAsync(entity);
-            _dataContext.SaveChangesAsync();
+            _dataContext.SaveChanges();
         }
 
         public void Delete(T entity)
         {
             _dataContext.Set<T>().Remove(entity);
-            _dataContext.SaveChangesAsync();
+            _dataContext.SaveChanges();
         }
 
         public void Update(T entity)
         {
-            _dataContext.Set<T>().Update(entity);
-            _dataContext.SaveChangesAsync();
+            try
+            {
+                _dataContext.Set<T>().Update(entity);
+                _dataContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
         public IQueryable<T> FindAll()
         {

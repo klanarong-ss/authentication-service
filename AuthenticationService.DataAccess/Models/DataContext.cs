@@ -16,6 +16,7 @@ public partial class DataContext : DbContext
     }
 
     public virtual DbSet<UserLogin> UserLogins { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseCollation("Thai_CI_AS");
@@ -31,7 +32,7 @@ public partial class DataContext : DbContext
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.LastLogin).HasColumnType("datetime");
             entity.Property(e => e.Password).HasMaxLength(150);
-            entity.Property(e => e.RefreshToken).HasMaxLength(200);
+            entity.Property(e => e.RefreshToken).HasMaxLength(150);
             entity.Property(e => e.RefreshTokenExpiryTime).HasColumnType("datetime");
             entity.Property(e => e.Salt).HasMaxLength(64);
             entity.Property(e => e.UpdatedBy).HasMaxLength(50);
