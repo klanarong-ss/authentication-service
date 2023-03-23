@@ -23,7 +23,7 @@ namespace AuthenticationService.Controllers
 
         [HttpPost]
         [Route("GetAll")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
             var result = _authenService.GetAll();
