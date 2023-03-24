@@ -26,7 +26,16 @@ namespace AuthenticationService.Controllers
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
-            var result = _authenService.GetAll();
+            var result = await _authenService.GetAll();
+            return Ok(new { Result = result, Message = ResponseMessage.Success });
+        }
+
+        [HttpPost]
+        [Route("AuthenGetAll")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AuthenGetAll()
+        {
+            var result = await _authenService.GetAll();
             return Ok(new { Result = result, Message = ResponseMessage.Success });
         }
 
@@ -37,7 +46,7 @@ namespace AuthenticationService.Controllers
             if (registerRequest == null)
                 return BadRequest();
 
-            var result = _authenService.Register(registerRequest);
+            var result = await _authenService.Register(registerRequest);
             return Ok(new { Message = result });
         }
 
