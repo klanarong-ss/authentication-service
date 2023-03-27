@@ -45,7 +45,6 @@ namespace AuthenticationService.Bussiness.Services
                 Username = userById.Username,
                 Email = ""
             };
-
             return userProfile;
         }
     }
