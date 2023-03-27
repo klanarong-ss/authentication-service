@@ -3,6 +3,7 @@ using AuthenticationService.DataAccess.ComplexModels;
 using AuthenticationService.DataAccess.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace AuthenticationService.Controllers
 {
@@ -16,28 +17,13 @@ namespace AuthenticationService.Controllers
             _userLoginService = userLoginService;
         }
 
-        [HttpGet]
-        [Route("GetAll")]
-        public async Task<IActionResult> GetAll()
-        {
-            var userList = await _userLoginService.GetAll();
-            return Ok(userList);
-        }
-
         [HttpPost]
-        [Route("Login")]
-        public async Task<IActionResult> Login(AuthenticateRequest authenticateRequest)
+        [Route("GetUserProfile")]
+        public async Task<IActionResult> Login()
         {
-            var token = await _userLoginService.Login(authenticateRequest);
+            var token = await _userLoginService.GetUserProfile();
             return Ok(token);
         }
 
-        [HttpPost]
-        [Route("Register")]
-        public async Task<IActionResult> Register(UserLoginDto newUser)
-        {
-            var result = await _userLoginService.Register(newUser);
-            return Ok(result);
-        }
     }
 }

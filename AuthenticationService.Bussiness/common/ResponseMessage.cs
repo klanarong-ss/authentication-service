@@ -15,5 +15,6 @@ namespace AuthenticationService.Bussiness.common
         public static string RegisterSuccess = "Register Success";
         public static string RegisterFail = "Register Fail";
         public static string InvalidUserName = "Invalid user name";
+        public static string LogoutSuccess = "Logout Success";
     }
 }

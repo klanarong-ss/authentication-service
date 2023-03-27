@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using System.Formats.Asn1;
 using System.Runtime.InteropServices;
+using System.Security.Claims;
 
 namespace AuthenticationService.Controllers
 {
@@ -23,7 +24,7 @@ namespace AuthenticationService.Controllers
 
         [HttpPost]
         [Route("GetAll")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> GetAll()
         {
             var result = await _authenService.GetAll();
@@ -32,7 +33,7 @@ namespace AuthenticationService.Controllers
 
         [HttpPost]
         [Route("AuthenGetAll")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> AuthenGetAll()
         {
             var result = await _authenService.GetAll();
@@ -62,6 +63,18 @@ namespace AuthenticationService.Controllers
             return Ok(new { Result = result, Message = ResponseMessage.Success });
         }
 
+        [Authorize(Roles = "Admin,User")]
+        [HttpPost]
+        [Route("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+
+
+            var result = await _authenService.Logout();
+            return Ok(new { Result = result, Message = ResponseMessage.Success });
+        }
+
+        [Authorize(Roles = "Admin,User")]
         [HttpPost]
         [Route("RefreshToken")]
         public async Task<IActionResult> RefreshToken(TokenModel tokenModel)
@@ -78,12 +91,15 @@ namespace AuthenticationService.Controllers
         [Route("RevokeToken")]
         public async Task<IActionResult> RevokeToken([FromBody] string username)
         {
+
             if (username == null || username == "")
                 return BadRequest();
 
             await _authenService.RevokeToken(username);
             return NoContent(); 
         }
+
+
 
     }
 }

@@ -3,6 +3,7 @@ using AuthenticationService.DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,5 +16,7 @@ namespace AuthenticationService.Bussiness.InterfaceServices
         Task<TokenModel> RefreshToken(TokenModel tokenModel);
         Task RevokeToken(string username);
         Task<IEnumerable<UserLogin>> GetAll();
+        ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
+        Task<string> Logout();
     }
 }

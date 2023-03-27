@@ -5,6 +5,7 @@ using AuthenticationService.DataAccess.DTOs;
 using AuthenticationService.DataAccess.InterfaceRepositories;
 using AuthenticationService.DataAccess.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
@@ -25,11 +26,13 @@ namespace AuthenticationService.Bussiness.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        public AuthenService(IUnitOfWork unitOfWork, IConfiguration configuration, IMapper mapper)
+        IHttpContextAccessor _httpContextAccessor;
+        public AuthenService(IUnitOfWork unitOfWork, IConfiguration configuration, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWork;
             _configuration = configuration;
             _mapper = mapper;
+           _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<AuthenResponse> Login(LoginModel loginModel)
@@ -47,7 +50,8 @@ namespace AuthenticationService.Bussiness.Services
                     var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, loginModel.Username),
-                    new Claim(ClaimTypes.Role, UserRoles.Admin)
+                    new Claim(ClaimTypes.Role, UserRoles.Admin),
+                    new Claim("UserId",user.UserId)
                 };
 
                     var _profile = new AuthenResponse
@@ -212,22 +216,25 @@ namespace AuthenticationService.Bussiness.Services
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
-
-            //var tokeOptions = new JwtSecurityToken(
-            //    issuer: "https://localhost:5001",
-            //    audience: "https://localhost:5001",
-            //    claims: claims,
-            //    expires: DateTime.Now.AddMinutes(tokenExpire),
-            //    signingCredentials: signinCredentials
-            //);
-            //var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-            //return tokenString;
         }
 
         public async Task<IEnumerable<UserLogin>> GetAll()
         {
             var a = await _unitOfWork.UserLogin.FindAll().ToListAsync();
             return a;
+        }
+
+        public async Task<string> Logout()
+        {
+            var userId = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value;
+            var user = await _unitOfWork.UserLogin.FindByCondition(x => x.UserId == userId).FirstOrDefaultAsync();
+
+            user.RefreshToken = null;
+            user.RefreshTokenExpiryTime = null;
+
+            _unitOfWork.UserLogin.Update(user);
+
+            return ResponseMessage.LogoutSuccess;
         }
     }
 }

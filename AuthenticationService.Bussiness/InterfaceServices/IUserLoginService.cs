@@ -11,8 +11,6 @@ namespace AuthenticationService.Bussiness.InterfaceServices
 {
     public interface IUserLoginService
     {
-        Task<IEnumerable<UserLogin>> GetAll();
-        Task<AuthenticationResponse> Login(AuthenticateRequest authenticateRequest);
-        Task<string> Register(UserLoginDto newUser);
+        Task<UserProfile> GetUserProfile();
     }
 }

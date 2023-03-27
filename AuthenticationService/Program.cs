@@ -77,6 +77,7 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddHttpContextAccessor();
 
 // Register Dependency Injection
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
