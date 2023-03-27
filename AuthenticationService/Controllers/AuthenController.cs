@@ -28,7 +28,7 @@ namespace AuthenticationService.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await _authenService.GetAll();
-            return Ok(new { Result = result, Message = ResponseMessage.Success });
+            return Ok(result);
         }
 
         [HttpPost]
@@ -37,7 +37,7 @@ namespace AuthenticationService.Controllers
         public async Task<IActionResult> AuthenGetAll()
         {
             var result = await _authenService.GetAll();
-            return Ok(new { Result = result, Message = ResponseMessage.Success });
+            return Ok(result);
         }
 
         [HttpPost]
@@ -48,7 +48,7 @@ namespace AuthenticationService.Controllers
                 return BadRequest();
 
             var result = await _authenService.Register(registerRequest);
-            return Ok(new { Message = result });
+            return Ok(result);
         }
 
         [HttpPost]
@@ -60,7 +60,7 @@ namespace AuthenticationService.Controllers
                 return BadRequest();
 
             var result = await _authenService.Login(loginModel);
-            return Ok(new { Result = result, Message = ResponseMessage.Success });
+            return Ok(result);
         }
 
         [Authorize(Roles = "Admin,User")]
@@ -71,7 +71,7 @@ namespace AuthenticationService.Controllers
 
 
             var result = await _authenService.Logout();
-            return Ok(new { Result = result, Message = ResponseMessage.Success });
+            return Ok(result);
         }
 
         [Authorize(Roles = "Admin,User")]
@@ -83,7 +83,7 @@ namespace AuthenticationService.Controllers
                 return BadRequest();
 
             var result = await _authenService.RefreshToken(tokenModel);
-            return Ok(new { Result = result, Message = ResponseMessage.Success });
+            return Ok(result);
         }
 
         [Authorize(Roles = "Admin")]
