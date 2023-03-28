@@ -5,7 +5,7 @@ services:
     container_name: authen-service
     image: klanarong/authentication-service:latest
     environment:
-      - TZ=Asia/Bankkok
+      - TZ=Asia/Bangkok
     ports:
       - '91:80'
     restart: always
