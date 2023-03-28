@@ -55,7 +55,6 @@ namespace AuthenticationService.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
-
             if (loginModel == null)
                 return BadRequest();
 
@@ -63,13 +62,10 @@ namespace AuthenticationService.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin,User")]
         [HttpPost]
         [Route("Logout")]
         public async Task<IActionResult> Logout()
         {
-
-
             var result = await _authenService.Logout();
             return Ok(result);
         }
@@ -91,7 +87,6 @@ namespace AuthenticationService.Controllers
         [Route("RevokeToken")]
         public async Task<IActionResult> RevokeToken([FromBody] string username)
         {
-
             if (username == null || username == "")
                 return BadRequest();
 
