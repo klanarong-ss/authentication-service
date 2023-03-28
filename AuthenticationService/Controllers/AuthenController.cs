@@ -70,7 +70,6 @@ namespace AuthenticationService.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin,User")]
         [HttpPost]
         [Route("RefreshToken")]
         public async Task<IActionResult> RefreshToken(TokenModel tokenModel)

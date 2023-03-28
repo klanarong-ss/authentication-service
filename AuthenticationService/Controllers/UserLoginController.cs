@@ -25,5 +25,30 @@ namespace AuthenticationService.Controllers
             return Ok(token);
         }
 
+        [HttpPost]
+        [Route("GetTimeZone")]
+        public async Task<IActionResult> GetTimeZone()
+        {
+            TimeZone localZone = TimeZone.CurrentTimeZone;
+            var a = localZone.ToLocalTime;
+            var b = localZone.ToUniversalTime;
+            DateTime currentDate = DateTime.Now;
+
+            DateTime currentUTC = localZone.ToUniversalTime(currentDate);
+            TimeSpan currentOffset = localZone.GetUtcOffset(currentDate);
+
+            string currentTimeZone = $@"
+                                        CurrentUTC: {currentUTC}
+                                        UTC offset: {currentOffset}
+                                        Standard time name: {localZone.StandardName}
+                                        Daylight saving time name: {localZone.DaylightName}
+                                        Current date and time: {DateTime.Now}
+                                        
+";
+
+            //var token = await _userLoginService.GetUserProfile();
+            return Ok(currentTimeZone);
+        }
+
     }
 }
