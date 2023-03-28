@@ -27,7 +27,7 @@ namespace AuthenticationService.Controllers
 
         [HttpPost]
         [Route("GetTimeZone")]
-        public async Task<IActionResult> GetTimeZone()
+        public IActionResult GetTimeZone()
         {
             TimeZone localZone = TimeZone.CurrentTimeZone;
             var a = localZone.ToLocalTime;
