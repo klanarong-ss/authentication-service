@@ -207,8 +207,8 @@ namespace AuthenticationService.Bussiness.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                IssuedAt = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddMinutes(tokenExpire),
+                IssuedAt = DateTime.Now,
+                Expires = DateTime.Now.AddMinutes(tokenExpire),
                 SigningCredentials = signinCredentials,
                 Issuer = "Issuer",
                 Audience = "Audience"

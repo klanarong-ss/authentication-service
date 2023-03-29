@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: dev
+    branches: test
 
 jobs:
   build-container:
@@ -31,7 +31,7 @@ jobs:
           port: 22
           script: |
             cd /home/work_space/authentication-service/
-            git checkout dev
+            git checkout test
             git pull
             docker pull klanarong/authentication-service:latest
             docker-compose up -d --force-recreate
