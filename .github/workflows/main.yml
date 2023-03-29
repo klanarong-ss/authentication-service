@@ -31,7 +31,7 @@ jobs:
           port: 22
           script: |
             cd /home/work_space/authentication-service/
+            git checkout dev
             git pull
-            git checkout test
             docker pull klanarong/authentication-service:latest
             docker-compose up -d --force-recreate
