@@ -24,7 +24,6 @@ namespace AuthenticationService.Controllers
 
         [HttpPost]
         [Route("GetAll")]
-        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> GetAll()
         {
             var result = await _authenService.GetAll();
@@ -39,6 +38,25 @@ namespace AuthenticationService.Controllers
             var result = await _authenService.GetAll();
             return Ok(result);
         }
+
+        [HttpPost]
+        [Route("GetAllByUser")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> GetAllByUser()
+        {
+            var result = await _authenService.GetAll();
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("GetAllByAdmin")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllByAdmin()
+        {
+            var result = await _authenService.GetAll();
+            return Ok(result);
+        }
+
 
         [HttpPost]
         [Route("Register")]
