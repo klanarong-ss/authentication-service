@@ -50,5 +50,21 @@ namespace AuthenticationService.Controllers
             return Ok(currentTimeZone);
         }
 
+        [HttpPost]
+        [Route("GetNameRequest")]
+        public IActionResult GetNameRequest()
+        {
+            var name = Request.Headers["name"].ToString();
+            var userId = Request.Headers["UserId"].ToString();
+            var userRole = Request.Headers["role"].ToString();
+
+            string result = $@"
+Name: {name}
+UserId: {userId}
+Role: {userRole}";
+
+            return Ok(result);
+        }
+
     }
 }
