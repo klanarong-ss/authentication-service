@@ -16,6 +16,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,17 +36,24 @@ namespace AuthenticationService.Bussiness.Services
 
         public async Task<UserProfile> GetUserProfile()
         {
-            //var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var identity = _httpContextAccessor.HttpContext.User.Claims;
-            var userId = identity.FirstOrDefault(x => x.Type == "UserId")?.Value;
-            var userById = await _unitOfWork.UserLogin.FindByCondition(x=>x.UserId == userId).FirstAsync();
-
-            var userProfile = new UserProfile
+            var identity = _httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
+            if (identity != null)
             {
-                Username = userById.Username,
-                Email = ""
-            };
-            return userProfile;
+                var userId = identity.FindFirst("UserId");
+                var userById = await _unitOfWork.UserLogin.FindByCondition(x => x.UserId == userId.ToString()).FirstAsync();
+
+                var userProfile = new UserProfile
+                {
+                    Username = userById.Username,
+                    Email = ""
+                };
+                return userProfile;
+
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
