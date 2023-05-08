@@ -14,6 +14,7 @@ namespace AuthenticationService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthenController : ControllerBase
     {
         private readonly IAuthenService _authenService;
@@ -24,6 +25,7 @@ namespace AuthenticationService.Controllers
 
         [HttpPost]
         [Route("GetAll")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var result = await _authenService.GetAll();
@@ -32,7 +34,7 @@ namespace AuthenticationService.Controllers
 
         [HttpPost]
         [Route("AuthenGetAll")]
-        [Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AuthenGetAll()
         {
             var result = await _authenService.GetAll();
@@ -59,6 +61,7 @@ namespace AuthenticationService.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("Register")]
         public async Task<IActionResult> Register(RegisterRequest registerRequest)
         {
@@ -70,6 +73,7 @@ namespace AuthenticationService.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("Login")]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
@@ -89,6 +93,7 @@ namespace AuthenticationService.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("RefreshToken")]
         public async Task<IActionResult> RefreshToken(TokenModel tokenModel)
         {
@@ -99,8 +104,8 @@ namespace AuthenticationService.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [Route("RevokeToken")]
         public async Task<IActionResult> RevokeToken([FromBody] string username)
         {

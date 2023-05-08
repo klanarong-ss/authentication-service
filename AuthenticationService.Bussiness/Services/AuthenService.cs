@@ -48,11 +48,12 @@ namespace AuthenticationService.Bussiness.Services
                 {
                     var refreshTokenExpire = Convert.ToInt64(_configuration.GetSection("JWT:RefreshTokenValidityInDays").Value);
                     var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, loginModel.Username),
-                    new Claim(ClaimTypes.Role, UserRoles.Admin),
-                    new Claim("UserId",user.UserId)
-                };
+                    {
+                        new Claim(ClaimTypes.Name, user.Username),
+                        new Claim(ClaimTypes.Role, UserRoles.Admin),
+                        new Claim("UserId",user.UserId),
+                        new Claim("Test01","007")
+                    };
 
                     var _profile = new AuthenResponse
                     {

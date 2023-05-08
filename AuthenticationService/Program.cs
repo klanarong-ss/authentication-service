@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using System.Text.Json;
 
@@ -34,20 +35,20 @@ builder.Services.AddSwaggerGen(options =>
         Type = SecuritySchemeType.ApiKey
     });
 
-    //options.OperationFilter<SecurityRequirementsOperationFilter>();
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = true,
+            ValidateIssuer = false,
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
+            ClockSkew = TimeSpan.Zero,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            //ClockSkew = TimeSpan.Zero,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JWT:Secret").Value)),
         };
     });
@@ -57,7 +58,18 @@ builder.Services.AddControllers().AddJsonOptions(option =>
     option.JsonSerializerOptions.PropertyNamingPolicy = null;  // ignore json camalcase
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen(option =>
+//{
+//    option.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+//    {
+//        Description = "Standard Authorization header using the Bearer scheme",
+//        In = ParameterLocation.Header,
+//        Name = "Authorization",
+//        Type = SecuritySchemeType.ApiKey
+//    });
+//    option.OperationFilter<SecurityRequirementsOperationFilter>();
+//});
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddHttpContextAccessor();
@@ -91,6 +103,7 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
