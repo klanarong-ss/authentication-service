@@ -39,8 +39,8 @@ namespace AuthenticationService.Bussiness.Services
             var identity = _httpContextAccessor.HttpContext.User.Identity as ClaimsIdentity;
             if (identity != null)
             {
-                var userId = identity.FindFirst("UserId");
-                var userById = await _unitOfWork.UserLogin.FindByCondition(x => x.UserId == userId.ToString()).FirstAsync();
+                var userId = identity.FindFirst("UserId").Value;
+                var userById = await _unitOfWork.UserLogin.FindByCondition(x => x.UserId == userId).FirstAsync();
 
                 var userProfile = new UserProfile
                 {
