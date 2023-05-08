@@ -111,7 +111,7 @@ namespace AuthenticationService.Bussiness.Services
             var username = principal.Identity.Name; //this is mapped to the Name claim by default
             var user = await _unitOfWork.UserLogin.FindByCondition(x => x.Username == username).FirstOrDefaultAsync();
 
-            if (user is null || user.RefreshToken == refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
+            if (user is null || user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.Now)
                 throw new Exception("Invalid client request");
 
             var newAccessToken = GenerateJwtToken(principal.Claims);
